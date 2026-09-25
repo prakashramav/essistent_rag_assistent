@@ -1,4 +1,15 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000/api/v1";
+const getApiBase = () => {
+  let base = process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000/api/v1";
+  if (!base.startsWith("http://") && !base.startsWith("https://")) {
+    base = `https://${base}`;
+  }
+  if (!base.endsWith("/api/v1")) {
+    base = base.replace(/\/+$/, "") + "/api/v1";
+  }
+  return base;
+};
+
+const API_BASE = getApiBase();
 
 const STORAGE_KEYS = {
   ACCESS_TOKEN: "rag_access_token",

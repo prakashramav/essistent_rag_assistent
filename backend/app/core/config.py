@@ -44,15 +44,48 @@ class Settings(BaseSettings):
         extra="ignore"
     )
 
+    @field_validator("DATABASE_URL", mode="before")
+    @classmethod
+    def assemble_async_db_url(cls, v: str | None) -> str:
+        if not v:
+            return v
+        if v.startswith("postgres://"):
+            return v.replace("postgres://", "postgresql+asyncpg://", 1)
+        elif v.startswith("postgresql://") and not v.startswith("postgresql+"):
+            return v.replace("postgresql://", "postgresql+asyncpg://", 1)
+        return v
+
     @field_validator("SYNC_DATABASE_URL", mode="before")
     @classmethod
     def assemble_sync_db_url(cls, v: str | None, info) -> str:
         if isinstance(v, str) and v:
+            if v.startswith("postgres://"):
+                return v.replace("postgres://", "postgresql+psycopg2://", 1)
+            elif v.startswith("postgresql://") and not v.startswith("postgresql+"):
+                return v.replace("postgresql://", "postgresql+psycopg2://", 1)
             return v
         db_url = info.data.get("DATABASE_URL", "")
         if db_url.startswith("postgresql+asyncpg://"):
-            return db_url.replace("postgresql+asyncpg://", "postgresql+psycopg2://")
+            return db_url.replace("postgresql+asyncpg://", "postgresql+psycopg2://", 1)
+        elif db_url.startswith("postgres://"):
+            return db_url.replace("postgres://", "postgresql+psycopg2://", 1)
+        elif db_url.startswith("postgresql://") and not db_url.startswith("postgresql+"):
+            return db_url.replace("postgresql://", "postgresql+psycopg2://", 1)
         return db_url
+
+    @field_validator("BACKEND_CORS_ORIGINS", mode="before")
+    @classmethod
+    def assemble_cors_origins(cls, v: Union[str, List[str]]) -> List[str]:
+        if isinstance(v, str):
+            v_trimmed = v.strip()
+            if v_trimmed.startswith("[") and v_trimmed.endswith("]"):
+                import json
+                try:
+                    return json.loads(v_trimmed)
+                except Exception:
+                    pass
+            return [i.strip() for i in v_trimmed.split(",") if i.strip()]
+        return v
 
 
 settings = Settings()
