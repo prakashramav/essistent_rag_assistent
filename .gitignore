@@ -1,0 +1,104 @@
+# ==========================================
+# Enterprise RAG Assistant - Git Ignore Rules
+# ==========================================
+
+# 1. Environment & Secrets (NEVER COMMIT)
+.env
+.env.*
+*.env
+*.env.local
+*.env.development.local
+*.env.test.local
+*.env.production.local
+backend/.env
+frontend/.env.local
+
+# Preserve templates
+!.env.example
+!backend/.env.example
+
+# 2. Python & Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+backend/venv/
+backend/.venv/
+backend/env/
+
+# Python Bytecode & Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+.eggs/
+
+# Pytest & Coverage
+.pytest_cache/
+backend/.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# 3. Node.js & Next.js Frontend
+node_modules/
+frontend/node_modules/
+*/node_modules/
+
+# Next.js Build Outputs
+.next/
+frontend/.next/
+*/.next/
+out/
+frontend/out/
+.turbo/
+
+# Logs & Debugging
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# 4. Uploaded Files & Temporary Storage
+backend/uploads/*
+!backend/uploads/.gitkeep
+uploads/
+tmp/
+temp/
+
+# 5. Database & Docker Volumes
+postgres_data/
+redis_data/
+*.sqlite3
+*.db
+*.dump
+
+# 6. Operating System & Editor Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# IDE & Editor Settings
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# 7. Agent / LLM Scratchpads & Ide Metadata
+.agents/
+.gemini/

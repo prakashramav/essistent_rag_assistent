@@ -1,0 +1,26 @@
+# Python Virtual Environments
+venv/
+.venv/
+env/
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environment Secrets
+.env
+.env.*
+!.env.example
+
+# Temporary Uploads
+uploads/*
+!uploads/.gitkeep
