@@ -24,6 +24,8 @@ class Settings(BaseSettings):
         "http://localhost:3000",
         "http://127.0.0.1:3000",
         "http://localhost:8000",
+        "https://essistent-rag-assistent-9j4c.vercel.app",
+        "https://essistent-rag-assistent.onrender.com"
     ]
 
     # AI Model Providers
